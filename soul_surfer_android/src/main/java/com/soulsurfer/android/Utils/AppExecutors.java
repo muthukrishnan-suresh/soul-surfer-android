@@ -59,4 +59,10 @@ public class AppExecutors {
             mainThreadHandler.post(command);
         }
     }
+
+    public static void runOnMainThread(Runnable runnable) {
+        AppExecutors.getInstance()
+                .mainThread()
+                .execute(runnable);
+    }
 }

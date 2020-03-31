@@ -18,13 +18,23 @@ public class PageInfoHelper {
                     public void run() {
                         try {
                             Document document = Jsoup.connect(url).get();
-                            PageInfo pageInfo = MetaHelper.getMetaData(url, document);
-                            listener.onPageInfoLoaded(pageInfo);
+                            final PageInfo pageInfo = MetaHelper.getMetaData(url, document);
+                            AppExecutors.runOnMainThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.onPageInfoLoaded(pageInfo);
+                                }
+                            });
                             return;
                         } catch (Exception e) {
                             Log.e("SoulSurfer", e.toString());
                         }
-                        listener.onError(url);
+                        AppExecutors.runOnMainThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onError(url);
+                            }
+                        });
                     }
                 });
     }
