@@ -1,7 +1,7 @@
 package com.soulsurfer.android;
 
-import com.soulsurfer.android.Utils.PageInfoHelper;
-import com.soulsurfer.android.Utils.StringUtils;
+import com.soulsurfer.android.utils.PageInfoHelper;
+import com.soulsurfer.android.utils.StringUtils;
 
 public class RequestCreator {
 

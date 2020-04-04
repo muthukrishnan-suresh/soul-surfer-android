@@ -1,4 +1,4 @@
-package com.soulsurfer.android.Utils;
+package com.soulsurfer.android.utils;
 
 import android.util.Log;
 

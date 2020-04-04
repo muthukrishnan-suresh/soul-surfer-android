@@ -1,4 +1,4 @@
-package com.soulsurfer.android.Utils;
+package com.soulsurfer.android.utils;
 
 public class StringUtils {
 
