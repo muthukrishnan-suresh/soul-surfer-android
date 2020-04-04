@@ -1,0 +1,13 @@
+{
+  "config": {
+    "feature_enabled": true,
+    "block_request": false,
+    "endpoint": "https://soul-surfer-app.firebaseapp.com/config"
+  },
+  "oembed_config": {
+    "feature_enabled": true,
+    "block_request": false,
+    "endpoint": "https://soul-surfer-app.firebaseapp.com/provider",
+    "sdk_cache_ttl": 86400000
+  }
+}
