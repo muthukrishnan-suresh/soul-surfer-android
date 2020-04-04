@@ -1,8 +1,9 @@
-package com.soulsurfer.android.utils;
+package com.soulsurfer.android.helper;
 
 import android.util.Log;
 
 import com.soulsurfer.android.PageInfo;
+import com.soulsurfer.android.utils.MetaAttr;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
