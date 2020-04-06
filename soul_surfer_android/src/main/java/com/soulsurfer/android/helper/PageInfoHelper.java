@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.soulsurfer.android.PageInfo;
 import com.soulsurfer.android.PageInfoListener;
-import com.soulsurfer.android.helper.MetaHelper;
 import com.soulsurfer.android.utils.AppExecutors;
 
 import org.jsoup.Jsoup;

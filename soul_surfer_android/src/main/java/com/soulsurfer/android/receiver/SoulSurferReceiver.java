@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.soulsurfer.android.helper.SoulSurferHelper;
+import com.soulsurfer.android.model.repository.SoulSurferRepository;
 import com.soulsurfer.android.utils.Constants;
 
 public class SoulSurferReceiver extends BroadcastReceiver {
@@ -22,7 +22,7 @@ public class SoulSurferReceiver extends BroadcastReceiver {
 
         switch (action) {
             case Constants.ACTION_APP_STATE_CHANGED:
-                SoulSurferHelper.getInstance((Application) context).onAppStateChanged();
+                SoulSurferRepository.getInstance((Application) context).onAppStateChanged();
                 break;
         }
     }

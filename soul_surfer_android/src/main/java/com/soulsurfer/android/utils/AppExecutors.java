@@ -65,4 +65,10 @@ public class AppExecutors {
                 .mainThread()
                 .execute(runnable);
     }
+
+    public static void runOnNetworkThread(Runnable runnable) {
+        AppExecutors.getInstance()
+                .networkIO()
+                .execute(runnable);
+    }
 }
