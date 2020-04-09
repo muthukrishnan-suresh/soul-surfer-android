@@ -69,6 +69,7 @@ public class PageInfoLoader {
             JSONObject mergedData = mergeData();
             if (mergedData == null) {
                 publishResult(pageUrl, pageInfo);
+                return;
             }
             try {
                 String KEY_TYPE = "type";
