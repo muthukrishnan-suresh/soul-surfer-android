@@ -77,9 +77,9 @@ public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecycler
                     .into(holder.providerIconView);
         }
 
-        if (pageMeta.pageInfo.getThumbnailUrl() != null) {
+        if (pageMeta.pageInfo.getImageUrl() != null) {
             Picasso.with(holder.imageView.getContext())
-                    .load(pageMeta.pageInfo.getThumbnailUrl())
+                    .load(pageMeta.pageInfo.getImageUrl())
                     .into(holder.imageView);
         }
     }

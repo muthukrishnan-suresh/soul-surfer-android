@@ -2,9 +2,11 @@ package com.soulsurfer.android.helper;
 
 import android.util.Log;
 
-import com.soulsurfer.android.PageInfo;
+import com.soulsurfer.android.utils.Constants;
 import com.soulsurfer.android.utils.MetaAttr;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -67,7 +69,7 @@ public class MetaHelper {
         return null;
     }
 
-    public static PageInfo getMetaData(String url, Document document) {
+    public static JSONObject getMetaData(String url, Document document) {
         HashMap<MetaAttr, String> metaDataMap = extractMetaDetails(document.select("meta"), MetaAttr.getMetaAttrMap());
 
         String title = getMetaData(metaDataMap, MetaAttr.Type.TITLE);
@@ -93,13 +95,18 @@ public class MetaHelper {
             }
         }
 
-        return PageInfo.PageInfoBuilder.getBuilder()
-                .withUrl(url)
-                .withTitle(title)
-                .withDescription(description)
-                .withThumbnailUrl(thumbnailUrl)
-                .withProviderName(providerName)
-                .withProviderIcon(providerIcon)
-                .build();
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("title", title);
+            jsonObject.put("description", description);
+            jsonObject.put("thumbnail_url", thumbnailUrl);
+            jsonObject.put("provider_name", providerName);
+            jsonObject.put("providerIcon", providerIcon);
+            return jsonObject;
+        } catch (JSONException e) {
+            Log.e(Constants.TAG, e.toString());
+        }
+
+        return null;
     }
 }

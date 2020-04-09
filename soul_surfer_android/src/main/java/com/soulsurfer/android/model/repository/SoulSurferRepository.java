@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.soulsurfer.android.PageInfo;
+import com.soulsurfer.android.PageInfoListener;
+import com.soulsurfer.android.helper.MetaHelper;
 import com.soulsurfer.android.listener.ApplicationStateListener;
 import com.soulsurfer.android.model.bean.Provider;
 import com.soulsurfer.android.model.bean.response.ConfigResponse;
@@ -11,9 +15,19 @@ import com.soulsurfer.android.model.network.RequestHelper;
 import com.soulsurfer.android.receiver.SoulSurferReceiver;
 import com.soulsurfer.android.utils.AppExecutors;
 import com.soulsurfer.android.utils.Constants;
+import com.soulsurfer.android.utils.StringUtils;
 
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SoulSurferRepository {
 
@@ -84,5 +98,9 @@ public class SoulSurferRepository {
                 Log.d(Constants.TAG, "Cache loaded in " + (System.currentTimeMillis() - startTime));
             }
         });
+    }
+
+    public static void load(final String url, final PageInfoListener listener) {
+        (new PageInfoLoader(url, listener, repo.providerSchemaToOEmbedUrlMap)).load();
     }
 }
