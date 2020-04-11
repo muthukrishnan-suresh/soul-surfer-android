@@ -65,7 +65,8 @@ public class ApplicationStateListener extends EmptyActivityLifecycleCallbacks {
         isForeground = activities.size() > 0;
 
         if (oldState != isForeground) {
-            BroadcastUtils.sendBroadcast(application, Constants.ACTION_APP_STATE_CHANGED);
+            BroadcastUtils broadcastUtils  = BroadcastUtils.newInstance(application).build();
+            broadcastUtils.sendBroadcast(Constants.ACTION_APP_STATE_CHANGED);
         }
     }
 }

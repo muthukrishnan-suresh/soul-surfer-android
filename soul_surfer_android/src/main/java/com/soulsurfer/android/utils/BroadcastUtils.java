@@ -7,11 +7,21 @@ import android.util.Log;
 
 public class BroadcastUtils {
 
-    public static void sendBroadcast(Application application, String action) {
-        sendBroadcast(application, action, null);
+    private Application application;
+
+    private BroadcastUtils(Application application) {
+        this.application = application;
     }
 
-    public static void sendBroadcast(Application application, String action, Bundle bundle) {
+    public static Builder newInstance(Application application) {
+        return new Builder(application);
+    }
+
+    public void sendBroadcast(String action) {
+        sendBroadcast(action, null);
+    }
+
+    public void sendBroadcast(String action, Bundle bundle) {
         Log.d(Constants.TAG, "BroadcastUtils::sendBroadcast() " + action);
         Intent intent = new Intent();
         intent.setAction(action);
@@ -19,5 +29,21 @@ public class BroadcastUtils {
             intent.putExtras(bundle);
         }
         application.sendBroadcast(intent);
+    }
+
+    public static final class Builder {
+        private Application application;
+
+        private Builder(Application application) {
+            this.application = application;
+        }
+
+        public BroadcastUtils build() {
+            if (application == null) {
+                throw new IllegalArgumentException("application can not be null while broadcasting");
+            }
+
+            return new BroadcastUtils(application);
+        }
     }
 }

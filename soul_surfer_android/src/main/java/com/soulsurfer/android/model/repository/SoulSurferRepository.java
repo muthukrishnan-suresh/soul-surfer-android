@@ -4,34 +4,23 @@ import android.app.Application;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.soulsurfer.android.PageInfo;
 import com.soulsurfer.android.PageInfoListener;
-import com.soulsurfer.android.helper.MetaHelper;
 import com.soulsurfer.android.listener.ApplicationStateListener;
 import com.soulsurfer.android.model.bean.Provider;
 import com.soulsurfer.android.model.bean.response.ConfigResponse;
 import com.soulsurfer.android.model.network.RequestHelper;
 import com.soulsurfer.android.receiver.SoulSurferReceiver;
 import com.soulsurfer.android.utils.AppExecutors;
+import com.soulsurfer.android.utils.BroadcastUtils;
 import com.soulsurfer.android.utils.Constants;
-import com.soulsurfer.android.utils.StringUtils;
 
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SoulSurferRepository {
 
     private static SoulSurferRepository repo;
+    private final BroadcastUtils broadcastUtils;
 
     private ConfigResponse configResponse;
     private List<Provider> providers;
@@ -40,6 +29,7 @@ public class SoulSurferRepository {
     public SoulSurferRepository(Application application) {
         registerReceiver(application);
         ApplicationStateListener.listen(application);
+        broadcastUtils = BroadcastUtils.newInstance(application).build();
     }
 
     public static synchronized SoulSurferRepository getInstance(Application application) {
@@ -95,6 +85,7 @@ public class SoulSurferRepository {
                     }
                 }
 
+                broadcastUtils.sendBroadcast(Constants.ACTION_CACHE_LOADED);
                 Log.d(Constants.TAG, "Cache loaded in " + (System.currentTimeMillis() - startTime));
             }
         });

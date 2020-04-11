@@ -1,7 +1,11 @@
 package com.soulsurfer.android.sample;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -16,6 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private final List<String> pageUrls = new ArrayList<>();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter("com.soulsurfer.android.CACHE_LOADED");
+        registerReceiver(receiver, intentFilter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +46,28 @@ public class MainActivity extends AppCompatActivity {
         pageUrls.add("https://www.dailymotion.com/video/x7t79a0");
         pageUrls.add("https://flickr.com/photos/bees/2362225867/");
         pageUrls.add("https://www.instagram.com/p/Bxe_eywh3eV/?utm_source=ig_web_button_share_sheet");
+    }
 
+    private void loadRecyclerView() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        final PagesRecyclerViewAdapter adapter = new PagesRecyclerViewAdapter(pageUrls);
+        PagesRecyclerViewAdapter adapter = new PagesRecyclerViewAdapter(pageUrls);
+        recyclerView.setAdapter(adapter);
+    }
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setAdapter(adapter);
-            }
-        }, 4000);
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("SoulSurferSample", "Cache loaded. Loading test data");
+            loadRecyclerView();
+        }
+    };
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);
     }
 }

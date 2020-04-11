@@ -24,6 +24,9 @@ public class SoulSurferReceiver extends BroadcastReceiver {
             case Constants.ACTION_APP_STATE_CHANGED:
                 SoulSurferRepository.getInstance((Application) context).onAppStateChanged();
                 break;
+            case Constants.ACTION_CACHE_LOADED:
+                Log.d(Constants.TAG, "Url Schema Mapping loaded");
+                break;
         }
     }
 }
