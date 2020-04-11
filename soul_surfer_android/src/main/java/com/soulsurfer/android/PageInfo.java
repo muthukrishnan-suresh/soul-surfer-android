@@ -12,6 +12,8 @@ public class PageInfo {
 
     @SerializedName("provider_name")
     private String providerName;
+
+    @SerializedName("provider_icon")
     private String providerIcon;
     private PageInfo.Type type;
 

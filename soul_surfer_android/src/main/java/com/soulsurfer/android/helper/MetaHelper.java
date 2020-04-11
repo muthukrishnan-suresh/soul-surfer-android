@@ -101,7 +101,7 @@ public class MetaHelper {
             jsonObject.put("description", description);
             jsonObject.put("thumbnail_url", thumbnailUrl);
             jsonObject.put("provider_name", providerName);
-            jsonObject.put("providerIcon", providerIcon);
+            jsonObject.put("provider_icon", providerIcon);
             return jsonObject;
         } catch (JSONException e) {
             Log.e(Constants.TAG, e.toString());
