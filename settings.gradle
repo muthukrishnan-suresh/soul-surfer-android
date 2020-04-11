@@ -1,0 +1,2 @@
+include ':app', ':soul_surfer_android'
+rootProject.name='SoulSurferAndroid'

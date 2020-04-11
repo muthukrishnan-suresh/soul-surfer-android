@@ -1,0 +1,22 @@
+{
+  "hosting": {
+    "redirects": [
+      {
+        "source": "/provider",
+        "destination": "https://oembed.com/providers.json",
+        "type": 302
+      },
+      {
+        "source": "/config",
+        "destination": "https://soul-surfer-app.firebaseapp.com/config.json",
+        "type": 302
+      }
+    ],
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
