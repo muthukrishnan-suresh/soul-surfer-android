@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private View progressView;
 
     private final List<String> pageUrls = new ArrayList<>();
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler_view);
+        progressView = findViewById(R.id.progress_view);
 
         pageUrls.add("https://medium.com/androiddevelopers/inline-functions-under-the-hood-12ddcc0b3a56");
         pageUrls.add("https://android-developers.googleblog.com/2020/03/meet-finalists-of-google-play-indie.html");
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         pageUrls.add("https://www.dailymotion.com/video/x7t79a0");
         pageUrls.add("https://flickr.com/photos/bees/2362225867/");
         pageUrls.add("https://www.instagram.com/p/Bxe_eywh3eV/?utm_source=ig_web_button_share_sheet");
+        recyclerView.setVisibility(View.INVISIBLE);
+        progressView.setVisibility(View.VISIBLE);
     }
 
     private void loadRecyclerView() {
@@ -53,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        PagesRecyclerViewAdapter adapter = new PagesRecyclerViewAdapter(pageUrls);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(pageUrls);
         recyclerView.setAdapter(adapter);
+        recyclerView.setVisibility(View.VISIBLE);
+        progressView.setVisibility(View.GONE);
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
