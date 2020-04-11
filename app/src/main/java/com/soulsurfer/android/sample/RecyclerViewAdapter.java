@@ -1,5 +1,6 @@
 package com.soulsurfer.android.sample;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.soulsurfer.android.PageInfo;
@@ -18,11 +21,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private final List<PageMeta> pageMetaList = new ArrayList<>();
 
-    public PagesRecyclerViewAdapter(@NonNull List<String> pageUrls) {
+    public RecyclerViewAdapter(@NonNull List<String> pageUrls) {
         if (pageUrls != null) {
             for (String url : pageUrls) {
                 pageMetaList.add(new PageMeta(url));
@@ -40,10 +43,9 @@ public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecycler
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final PageMeta pageMeta = pageMetaList.get(position);
+        updateUI(holder, pageMeta);
 
-        if (pageMeta.pageInfo != null) {
-            updateUI(holder, pageMeta);
-        } else {
+        if (pageMeta.pageInfo == null) {
             final long startTime = System.currentTimeMillis();
             SoulSurfer.get(pageMeta.url)
                     .load(new PageInfoListener() {
@@ -64,7 +66,35 @@ public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecycler
         }
     }
 
-    private void updateUI(@NonNull final ViewHolder holder, @NonNull PageMeta pageMeta) {
+    private void updateUI(@NonNull final ViewHolder holder, @Nullable PageMeta pageMeta) {
+        Context context = holder.loadTimeView.getContext();
+        if (pageMeta == null || pageMeta.pageInfo == null) {
+            holder.loadTimeView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.loadTimeView.setText("");
+            holder.providerNameView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.providerNameView.setText("");
+            holder.titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.titleView.setText("");
+            holder.descriptionView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.descriptionView.setText("");
+            holder.pageUrlView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.pageUrlView.setText("");
+            holder.providerIconView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.providerIconView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_bg));
+            holder.imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_bg));
+            return;
+        } else {
+            holder.loadTimeView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.providerNameView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.titleView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.descriptionView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.pageUrlView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.providerIconView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+            holder.imageView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+        }
+
+
         holder.loadTimeView.setText("Load time - " + (pageMeta.loadTime / 1000F) + "s");
         holder.providerNameView.setText(pageMeta.pageInfo.getProviderName());
         holder.titleView.setText(pageMeta.pageInfo.getTitle());
@@ -77,9 +107,9 @@ public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecycler
                     .into(holder.providerIconView);
         }
 
-        if (pageMeta.pageInfo.getThumbnailUrl() != null) {
+        if (pageMeta.pageInfo.getImageUrl() != null) {
             Picasso.with(holder.imageView.getContext())
-                    .load(pageMeta.pageInfo.getThumbnailUrl())
+                    .load(pageMeta.pageInfo.getImageUrl())
                     .into(holder.imageView);
         }
     }

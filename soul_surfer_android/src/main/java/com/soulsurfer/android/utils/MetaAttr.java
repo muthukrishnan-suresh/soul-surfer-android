@@ -1,4 +1,4 @@
-package com.soulsurfer.android.Utils;
+package com.soulsurfer.android.utils;
 
 import android.util.Log;
 
@@ -15,6 +15,8 @@ public enum MetaAttr {
     OG_TITLE(Type.TITLE, "og:title", Source.OG),
     OG_DESCRIPTION(Type.DESCRIPTION, "og:description", Source.OG),
     OG_IMAGE(Type.IMAGE, "og:image", Source.OG),
+    OG_IMAGE_WIDTH(Type.WIDTH, "og:image:width", Source.OG),
+    OG_IMAGE_HEIGHT(Type.HEIGHT, "og:image:height", Source.OG),
     OG_SITE_NAME(Type.SITE_NAME, "og:site_name", Source.OG),
 
     HTML_DESCRIPTION(Type.DESCRIPTION, "description", Source.HTML);
@@ -23,6 +25,8 @@ public enum MetaAttr {
         TITLE,
         DESCRIPTION,
         IMAGE,
+        WIDTH,
+        HEIGHT,
         SITE_NAME
     }
 

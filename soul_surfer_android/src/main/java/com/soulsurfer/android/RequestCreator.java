@@ -1,7 +1,7 @@
 package com.soulsurfer.android;
 
-import com.soulsurfer.android.Utils.PageInfoHelper;
-import com.soulsurfer.android.Utils.StringUtils;
+import com.soulsurfer.android.model.repository.SoulSurferRepository;
+import com.soulsurfer.android.utils.StringUtils;
 
 public class RequestCreator {
 
@@ -20,6 +20,6 @@ public class RequestCreator {
             throw new IllegalArgumentException("listener can not be null while loading a page");
         }
 
-        PageInfoHelper.load(url, listener);
+        SoulSurferRepository.load(url, listener);
     }
 }

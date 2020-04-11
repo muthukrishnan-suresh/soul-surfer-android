@@ -1,4 +1,4 @@
-package com.soulsurfer.android.Utils;
+package com.soulsurfer.android.utils;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -63,6 +63,12 @@ public class AppExecutors {
     public static void runOnMainThread(Runnable runnable) {
         AppExecutors.getInstance()
                 .mainThread()
+                .execute(runnable);
+    }
+
+    public static void runOnNetworkThread(Runnable runnable) {
+        AppExecutors.getInstance()
+                .networkIO()
                 .execute(runnable);
     }
 }
