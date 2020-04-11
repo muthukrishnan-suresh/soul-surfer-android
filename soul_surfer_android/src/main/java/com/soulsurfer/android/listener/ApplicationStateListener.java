@@ -18,18 +18,18 @@ public class ApplicationStateListener extends EmptyActivityLifecycleCallbacks {
     }
 
     public static boolean isForeground() {
-        return applicationStateListener.isForeground;
+        return applicationStateListener.currentState == State.FOREGROUND;
     }
 
     public static boolean isBackground() {
-        return !isForeground();
+        return applicationStateListener.currentState == State.BACKGROUND;
     }
 
     /*------------------- Listener engine. Don't mess with it. -----------------*/
     private static ApplicationStateListener applicationStateListener;
 
     private final Application application;
-    private boolean isForeground;
+    private State currentState = State.DEFAULT;
     private final List<Activity> activities = new ArrayList<>();
 
     private ApplicationStateListener(Application application) {
@@ -61,12 +61,19 @@ public class ApplicationStateListener extends EmptyActivityLifecycleCallbacks {
     }
 
     private void updateState() {
-        boolean oldState = isForeground;
-        isForeground = activities.size() > 0;
+        State oldState = currentState;
+        currentState = activities.size() > 0 ? State.FOREGROUND : State.BACKGROUND;
 
-        if (oldState != isForeground) {
+        if (oldState != currentState) {
             BroadcastUtils broadcastUtils  = BroadcastUtils.newInstance(application).build();
             broadcastUtils.sendBroadcast(Constants.ACTION_APP_STATE_CHANGED);
         }
+    }
+
+    private enum State {
+        FOREGROUND,
+        BACKGROUND;
+
+        private static final State DEFAULT = BACKGROUND;
     }
 }
