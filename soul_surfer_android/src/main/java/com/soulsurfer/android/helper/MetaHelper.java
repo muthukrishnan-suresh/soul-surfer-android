@@ -47,7 +47,17 @@ public class MetaHelper {
         return metaDataMap;
     }
 
-    private static String getMetaData(HashMap<MetaAttr, String> metaDataMap, MetaAttr.Type type) {
+    private static String getStringMetaData(HashMap<MetaAttr, String> metaDataMap, MetaAttr.Type type) {
+        Object result = getMetaData(metaDataMap, type);
+        return result == null ? null : String.valueOf(result);
+    }
+
+    private static int getIntMetaData(HashMap<MetaAttr, String> metaDataMap, MetaAttr.Type type) {
+        String result = getStringMetaData(metaDataMap, type);
+        return result == null ? 0 : Integer.parseInt(result);
+    }
+
+    private static Object getMetaData(HashMap<MetaAttr, String> metaDataMap, MetaAttr.Type type) {
         List<MetaAttr> metaAttrs = MetaAttr.getAttrForType(type);
         for (MetaAttr metaAttr : metaAttrs) {
             if (metaDataMap.containsKey(metaAttr)) {
@@ -72,10 +82,12 @@ public class MetaHelper {
     public static JSONObject getMetaData(String url, Document document) {
         HashMap<MetaAttr, String> metaDataMap = extractMetaDetails(document.select("meta"), MetaAttr.getMetaAttrMap());
 
-        String title = getMetaData(metaDataMap, MetaAttr.Type.TITLE);
-        String description = getMetaData(metaDataMap, MetaAttr.Type.DESCRIPTION);
-        String thumbnailUrl = getMetaData(metaDataMap, MetaAttr.Type.IMAGE);
-        String providerName = getMetaData(metaDataMap, MetaAttr.Type.SITE_NAME);
+        String title = getStringMetaData(metaDataMap, MetaAttr.Type.TITLE);
+        String description = getStringMetaData(metaDataMap, MetaAttr.Type.DESCRIPTION);
+        String thumbnailUrl = getStringMetaData(metaDataMap, MetaAttr.Type.IMAGE);
+        int thumbnailWidth = getIntMetaData(metaDataMap, MetaAttr.Type.WIDTH);
+        int thumbnailHeight = getIntMetaData(metaDataMap, MetaAttr.Type.HEIGHT);
+        String providerName = getStringMetaData(metaDataMap, MetaAttr.Type.SITE_NAME);
         String providerIcon = getSiteIcon(document.select("link"));
 
         if (title == null || title.length() == 0) {
@@ -100,6 +112,14 @@ public class MetaHelper {
             jsonObject.put("title", title);
             jsonObject.put("description", description);
             jsonObject.put("thumbnail_url", thumbnailUrl);
+            if (thumbnailWidth > 0) {
+                jsonObject.put("thumbnail_width", thumbnailWidth);
+            }
+
+            if (thumbnailHeight > 0) {
+                jsonObject.put("thumbnail_height", thumbnailHeight);
+            }
+
             jsonObject.put("provider_name", providerName);
             jsonObject.put("provider_icon", providerIcon);
             return jsonObject;
