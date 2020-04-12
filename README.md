@@ -44,7 +44,7 @@ maven { url "https://jitpack.io" }
 ```
 2. Add Soul Surfer dependency to your app module's build.gradle file (project -> app -> build.gradle):
 ```
-implementation 'com.soulsurfer.android:soul-surfer-android:1.0.0'
+implementation 'com.github.muthukrishnan-suresh:soul-surfer-android:1.0.0'
 ```
 3. Add code to load PageInfo for links
 ```java
