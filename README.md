@@ -14,7 +14,7 @@ Soul Surfer provides PageInfo of a giving link. This PageInfo is extracted from 
 Using this PageInfo, you can show intuitive previews of links in your applications like whatsapp, facebook, slack, etc.
 
 
-<img src="https://github.com/muthukrishnan-suresh/soul-surfer-android/blob/documentation/documentation/doc_images/other_apps_preview.png" alt="Other apps link preview image" />
+<img src="https://github.com/muthukrishnan-suresh/soul-surfer-android/blob/master/documentation/doc_images/other_apps_preview.png" alt="Other apps link preview image" />
 
 ## PageInfo
 #### Input
