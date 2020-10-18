@@ -27,6 +27,10 @@
 
 -keep class com.soulsurfer.android.model.** { *; }
 
+-keepclasseswithmembers public class com.soulsurfer.android.PageInfo {
+  *;
+}
+
 -keep public interface com.soulsurfer.android.PageInfoListener {
   *;
 }
