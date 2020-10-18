@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('release-key.keystore')
+            storePassword 'testtest'
+            keyAlias 'alias_name'
+            keyPassword 'testtest'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -12,8 +20,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -22,6 +31,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "com.squareup.picasso:picasso:2.5.2"
+    implementation project(path: ':soul_surfer_android')
 
-    implementation 'com.github.muthukrishnan-suresh:soul-surfer-android:1.0.0'
+    // implementation 'com.github.muthukrishnan-suresh:soul-surfer-android:1.0.0'
 }
