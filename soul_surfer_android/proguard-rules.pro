@@ -19,3 +19,36 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontoptimize
+-verbose
+-useuniqueclassmembernames
+-keepparameternames
+
+-keep class com.soulsurfer.android.model.** { *; }
+
+-keepclassmembers enum com.soulsurfer.android.** { *; }
+
+-keepclasseswithmembers public class com.soulsurfer.android.PageInfo {
+  *;
+}
+
+-keep public interface com.soulsurfer.android.PageInfoListener {
+  *;
+}
+
+-keepclasseswithmembers public class com.soulsurfer.android.RequestCreator {
+  *;
+}
+
+-keepclasseswithmembers public class com.soulsurfer.android.SoulSurfer {
+  *;
+}
+
+-keep class sun.misc.Unsafe { *; }
+
+-keepattributes Signature,Exceptions,InnerClasses
+
+-keep public class org.jsoup.** { public *; }
+
+-keeppackagenames org.jsoup.nodes
